@@ -6,3 +6,4 @@ edition = "2021"
 [dependencies]
 aws-config = "0.48.0"
 aws-sdk-s3 = "0.18.0"
+aws-sdk-sns = "0.18.0"
