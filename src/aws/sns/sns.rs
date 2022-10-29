@@ -1,3 +1,4 @@
+use super::Error;
 use crate::aws::{Config, SnsClient};
 use aws_sdk_sns::{model::MessageAttributeValue, Client};
 
@@ -11,7 +12,7 @@ impl SnsClient {
         }
     }
 
-    pub async fn publish(&self, subject: &str, message: &str) {
+    pub async fn publish(&self, subject: &str, message: &str) -> Result<(), Error> {
         publish(
             &self.client,
             &self.topic_arn,
@@ -19,7 +20,7 @@ impl SnsClient {
             message,
             &self.default_channel,
         )
-        .await;
+        .await
     }
 }
 
@@ -29,7 +30,7 @@ pub async fn publish(
     subject: &str,
     message: &str,
     channel: &Option<String>,
-) {
+) -> Result<(), Error> {
     let publish = client
         .publish()
         .topic_arn(topic_arn)
@@ -48,7 +49,7 @@ pub async fn publish(
         None => publish,
     };
     match publish.send().await {
-        Ok(_) => (),
-        Err(err) => panic!("{}", err),
-    };
+        Ok(_) => Ok(()),
+        Err(err) => Err(Error::SdkError(err.to_string())),
+    }
 }

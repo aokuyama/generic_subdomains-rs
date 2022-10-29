@@ -7,7 +7,7 @@ pub enum Error {
     StdError(String),
 }
 
-pub async fn download(url: &str, local_path: &str) -> Result<(), Error>{
+pub async fn download(url: &str, local_path: &str) -> Result<(), Error> {
     let response = match reqwest::get(url).await {
         Ok(response) => response,
         Err(err) => return Err(Error::ReqwestError(err.to_string())),
