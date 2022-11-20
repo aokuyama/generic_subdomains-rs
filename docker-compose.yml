@@ -6,6 +6,9 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./:/app
+      - build-target:/app/target
       - ./docker/.gitconfig:/root/.gitconfig
     working_dir: /app
     tty: true
+volumes:
+  build-target:
