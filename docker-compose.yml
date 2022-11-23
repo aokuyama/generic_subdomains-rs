@@ -10,5 +10,8 @@ services:
       - ./docker/.gitconfig:/root/.gitconfig
     working_dir: /app
     tty: true
+    environment:
+      - JWK_URL=${JWK_URL:-https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com}
+      - JWK_ISSUER=${JWK_ISSUER}
 volumes:
   build-target:
