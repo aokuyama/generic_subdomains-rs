@@ -1,5 +1,5 @@
+pub mod client;
 pub mod fifo;
-pub mod sns;
 
 #[derive(Debug)]
 pub enum Error {
