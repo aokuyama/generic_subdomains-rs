@@ -6,6 +6,12 @@ pub enum Error {
     ReqwestError(String),
     StdError(String),
 }
+impl std::fmt::Display for Error {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        write!(f, "{}", self.to_string())
+    }
+}
+impl std::error::Error for Error {}
 
 pub async fn download(url: &str, local_path: &str) -> Result<(), Error> {
     let response = match reqwest::get(url).await {
